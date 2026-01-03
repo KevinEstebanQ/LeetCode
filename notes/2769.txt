@@ -1,0 +1,21 @@
+[[LeetCode]]
+
+given num and [t], [x] is achivable if it can become num by increasing/decreasing [x] and num by 1 at most [t] times
+
+therefore we have 4 posibilities
+
+[combinations]
+we do not want to use eq. 1, 3, and 4. 1 and 4 are the same equation and and do not give use the answer we are looking for, and equation 3 is the opposite of what we want, meaning it is finding the minimum possible answer that satisfies increasing/decreasing [x] and num by 1 at most [t] times and finding the max num
+
+[eq1] x-t = m-t -> [x = m]
+[eq2] x-t = m+t -> [ x = m+2t] **
+[eq3] x+t = m-t -> [x = m-2t]
+[eq4] x+t = m+t - > [x = m]
+
+[m] =  4, [t]=1
+x-1 = 4+1 -> = x = 4+2(1) = 6 (maximum possible number achived by inc/dec x, num by 1 t times)
+
+func(num, t):
+	return num+2t
+
+
