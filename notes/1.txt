@@ -1,0 +1,59 @@
+[[LeetCode]]
+
+given an array of num integers and a target, return the INDICIES of the 2 numbers that add up to target, you may not use
+the same element twice and you may assume that each input would have exactly one solution.
+
+
+## reasoning
+
+so for this problem we can go 2 ways, brute force using 2 loops or using a hashmap for quick lookup for the complement of 
+the target
+
+we have and array of numbers ej nums = [1,2,3,4,5,6], and a target ej: 9, we need to find the index of the 2 nums that 
+sum up to target (9 in our case), if we go with 2 loops we can check every possible sum and have a simple check if 
+it equals the target
+
+with the faster solution we would add every entry of the nums array to a hashmap
+this would take O(n) time, then we use another loop to check if we have the correct answer, this second non-nested loop
+would just add n runs in the worst case so O(n+n) = O(2n) = O(n), as a dict(hashmap) lookup is O(1) as long as there
+were no colitions on the bucket selection for the key, so if the hash function is robust, the lookup is O(1)
+
+in this case a pseudo code would
+
+numMap={}
+for i in range (lenght of nums)
+    numMap[nums[i]] = i // loop through nums and set every key as the value at i of nums and the value as the index
+
+for i in range(lenght of nums)
+    complement = target - nums[i] // create the complement we are looing for in this runs
+    if complement in numMap and numMap.get(complement) != i:
+        return [i, numMap.get(complement)]
+
+# Code
+```python3 []
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        numMap = dict()
+        for i in range(len(nums)):
+            numMap[nums[i]] = i
+
+        for i in range(len(nums)):
+            complement = target -  nums[i]
+            possibleSolution = numMap.get(complement)
+            if possibleSolution and numMap[complement] != i:
+                return [i, possibleSolution]
+        return []
+```
+
+#code (slow solution)
+
+```python3 []
+class Solution:
+    def twoSumSlow(self, nums: List[int], target: int)->List[int]:
+            
+            for i in range(len(nums)):
+                for j in range(i+1, len(nums)): // nested loops to check all possible solutions
+                    if (nums[i]+nums[j]) == target:
+                        return [i,j]
+            return []
