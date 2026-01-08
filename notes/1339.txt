@@ -1,0 +1,51 @@
+Given the root of a binary tree, split the binary tree into two subtrees by removing one edge such that the product of the sums of the subtrees is maximized.
+
+Return the maximum product of the sums of the two subtrees. Since the answer may be too large, return it modulo 109 + 7.
+
+## Reasoning
+to find a fast answer to the problem the last thig we want is to bruteforce a solution with checking every possible tree and updating a maxproduct variable, we want to only do 1 DFS call, in said call compute the subtree sum which would equal
+cutting the tree imaginarily and updating the answer on the fly as we find new and better maximized answers
+
+we first need to do a DFS taking O(n) to calculate the total sum 
+we also have a helpful formula for the product we have to maximize
+
+we have a couple main variables to have in mind, Total Sum, sub tree Sum, and product
+
+the product is subtreeSum#1*subtreeSum#2, but how can we represent this in an easier way?
+well we already have subtreeSum#1 and totalSum, substracting subtreeSum#1 from the Total sum
+would give subtreeSum#1-totalSum = subtreeSum#2, so we can simplify
+
+product = subtreeSum#1(totalSum-subtreeSum#1), doing a DFS and updating product everytime it is a max
+then we have our answer
+
+## pseudo code
+
+```python3
+class Solution:
+    def maxProduct(self, root: Optional[TreeNode]) -> int:
+        MOD = 10**9 + 7 # answer can be very large, MOD the answer
+        self.ans = 0 # final answer to be updated
+
+        def totalSum(node):
+            if not node: # recursively find the total sum of the tree
+                return 0
+            return node.val + totalSum(node.left) + totalSum(node.right)
+        
+        def DFS(node): #postorder DFS to find the subsums
+            if not node:
+                return
+            
+            left = DFS(node.left) # build the sum of the subtrees
+            right = DFS(node.right)
+
+            subSum = node.val + left + right
+
+            self.ans = max(self.ans, subSum*(total-subSum)) #ans here is equal to the product, it will update once a new max is found
+
+            return subSum
+
+        total = totalSum(root)
+        DFS(root)
+        return self.ans%MOD
+```
+### this code shows an O(n) DFS traversal to find the sum of the tree, then a O(n) traversal to update the Max Product as it is found for every node
