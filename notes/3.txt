@@ -1,0 +1,100 @@
+
+
+first intuition for solution, does not work when as a single pass through the string would not be able
+to backtract to the earliest non repeating index, giving wrong answers
+FAILS
+``` python3 class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = dict()
+        currMaxLen = 0
+        ans = 0
+
+        for i in range(len(s)): 
+            if s[i] not in seen:
+                seen[s[i]] = 1 
+                currMaxLen += 1 
+                if currMaxLen > ans:
+                    ans = currMaxLen 
+            else: #true
+                seen.clear() #
+                currMaxLen = 0 #
+                
+        return ans```
+
+I also Explored a recursive approach but it breaks on half of the cases
+ FAILS
+```python3
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        self.ans = 0
+        def recursiveFinder(earlyIndex: int, s: str):
+            seen = dict()
+            localMax = 0
+            if earlyIndex > len(s):
+                return
+            
+            for i in range(earlyIndex, len(s)):
+                if s[i] not in seen:
+                    localMax += 1 
+                    seen[s[i]] = 1
+                    lastSeen = i 
+                    if localMax > self.ans: 
+                        self.ans = localMax 
+                else:
+                    localMax = 0
+                    if lastSeen < len(s) and s[lastSeen] == s[lastSeen+1]:
+                        lastSeen = lastSeen + 1
+                    recursiveFinder(lastSeen, s)    
+                    break
+
+        recursiveFinder(0,s)
+        return self.ans
+        ```
+
+looks like the most optimal option is to use the Sliding window approach
+
+# Intuition
+my first overall intuition for the problem was to count every distinct char in the string from the beggining
+the proble is that it does not take into account strings like
+pwwkew, where the algorith would reset the map at s[2], and say the answer is kew, it is a valid
+answer but not the earliest longest substring  
+
+the second algorith had the same issue, it didnt take into account earlier chars that were checked, and
+just threw them away and went with the next non repeating char
+
+
+
+# Approach
+for the approach for the solution It uses the sliding window approach, using 2 pointers
+a left and right, where left is only updated to be 1 over when a distinct char is found at the right
+of the left pointer
+, my first intuition was to avoid checking all chars n times but this breaks eventually.
+the max is just calculating the magnitude of the distance betweent the 2 pointers creating the window
+so r-l, and we add a + 1 to account for array 0 base indexing
+
+
+# Complexity
+- Time complexity:
+we are passing over once over the length of the string so O(n) and O(n) worst case space
+as if every char is unique we would need to save them in the set of len(n)
+
+
+# Code WORKS!
+```python3 []
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = set()
+        left = 0
+        right = 0
+        best = 0
+
+        for right in range(len(s)):
+            while s[right] in seen:
+                seen.remove(s[left])
+                left = left + 1
+            seen.add(s[right])
+            best = max(best, right-left+1)
+
+            
+        return best
+```
