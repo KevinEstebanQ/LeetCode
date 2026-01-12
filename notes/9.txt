@@ -1,0 +1,29 @@
+# Intuition
+My first intuition for this problem was to convert the nums easily to a string and use
+2 pointers to check if their ends were equal, at the moment where they were not then we can safely return
+false
+
+# Approach
+create a single for loop and a variable that uses the index created by the range to check the number from the right
+and keep going down, check their equality and return the resul
+
+# Complexity
+- Time complexity:
+we are checking the whole string to O(n)
+
+- Space complexity:
+we are checking in place, no copying to O(1)
+
+# Code
+```python3 []
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        stringNum = str(x)
+        n = len(stringNum)
+        for i in range(n-1):
+            j=n-i-1
+            if stringNum[i] != stringNum[j]:
+                return False
+        return True
+
+```
