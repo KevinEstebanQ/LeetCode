@@ -27,3 +27,39 @@ class Solution:
         return True
 
 ```
+``` JavaScript 
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function(x) {
+  let numString = String(x)
+  let n = numString.length;
+  let i = 0;
+  let j = n - i - 1;
+  let Ispalindrome = true;
+  while(i<n && j>0){
+    i++;
+    j--;
+    if(numString[i] != numString[j]){
+        return !Ispalindrome
+        }
+    }
+  return Ispalindrome
+};
+
+```
+```Java 
+class Solution {
+    public boolean isPalindrome(int x) {
+        String numString = String.valueOf(x);
+        int n = numString.length();
+        for(int i = 0; i < n;  i++){
+           int j = n - i - 1;
+            if(numString.charAt(i) != numString.charAt(j)){
+                return false;
+            }
+        }
+        return true;
+    }
+}```

@@ -1,0 +1,37 @@
+# Intuition
+my first intuition was to save the numerals in a map for quick and easy access, then loop through
+the characters in the string, the do various checs with 2 pointers, if at any momnent we find a numeral
+at i that is smaller in value than j (i=1) then instead of adding the values we substract
+
+
+# Complexity
+- Time complexity:
+O(n) for the time, n is the input string
+
+- Space complexity:
+the map doesnt grow, its constant, O(1)
+
+# Code
+```python3 []
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        
+##ej IV = 4, bc I < V then ans = I - V = 4
+# i ii iii iv v vi vii viii ix xx xxi xxii xxiii xxiiv the only real check we have to make is if our current numeral is
+# a 1, ie I, if the next digit is greater than it the the sum is s[i+1]-s[i]
+        numerals = {"I":1,"V":5,"X":10,"L":50,"C":100,"D":500,"M":1000}
+        sum=0
+        i = 0
+        while i < len(s): 
+            if i+1 < len(s):
+                if numerals[s[i]] < numerals[s[i + 1]]: 
+                    sum+= numerals[s[i+1]] - numerals[s[i]]
+                    i = i  + 2 
+                else:
+                    sum+=numerals[s[i]] 
+                    i= i + 1 
+            else:
+                sum+=numerals[s[i]] 
+                i = i + 1
+        return sum
+```

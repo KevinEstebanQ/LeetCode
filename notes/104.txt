@@ -1,0 +1,41 @@
+# Intuition
+after having worked a couple of times throug the problem 1339 max prodcut of splitted binary tree i concluded
+that the best way to check for the height of the binary tree is using the same principle, DFS!'
+so writing a simple DFS that updates a global maxDepth depending on the DFS that went the furthest down
+
+
+# Approach
+create a simple DFS, if the node is none the we return 0 to the sum
+we go down the both paths, the local max is the max between the 2 possible depths of the leafs
+we update the global with the longest leaf's height
+
+# Complexity
+- Time complexity:
+For the time we are taking at max O(n), as we are checking every node
+
+- Space complexity:
+the recursion stack is the tree height so O(h)
+
+# Code
+```python3 []
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        self.MaxDepth=0
+
+        def DFS(node):
+            if node == None:
+                return 0
+            leftD=1+DFS(node.left)
+            rightD=1+DFS(node.right)
+            localMax=max(leftD,rightD)
+            self.MaxDepth=max(self.MaxDepth, localMax)
+            return localMax
+        DFS(root)
+        return self.MaxDepth
+```

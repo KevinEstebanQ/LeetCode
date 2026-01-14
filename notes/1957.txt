@@ -1,0 +1,45 @@
+# Intuition
+tho my first intuition was to use a sliding window technique to check for the repaeting characters 
+a simple count and update previous approach was easier to implement
+
+# Approach
+a new string is intialize at the value of the first character of the non fancy string,
+then whe loop throught the whole lenght of the string, checking the amount of times a single character is repeated
+if the char at i is the same as our previous character then we update the flag to +1
+if they are not the same we update previous, reset flag and keep going, we only update our Fancy string if
+at the time of the current iteration we have a flag that is less than 3, only then we append our answer to the fancy string
+
+
+# Complexity
+- Time complexity:
+whe only loop once so O(n) with n being the length of the String
+
+
+- Space complexity:
+we are creating a new string and it can end up being the same length of the original string if it already is a valid fancy string
+so worst case the new string will equal original lenght, worst case O(n) space
+
+# Code
+```python3 []
+class Solution:
+    def makeFancyString(self, s: str) -> str:
+        flag = 1
+        prev = s[0]
+        newString=""
+        newString+=prev
+        for i in range(1, len(s)): #aaba, last index 3
+            if s[i] == prev:
+                flag +=1
+            else:
+                prev = s[i]
+                flag = 1
+            if flag < 3:
+                newString+=s[i]
+        return newString
+
+
+
+            
+
+
+```
