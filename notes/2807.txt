@@ -1,0 +1,51 @@
+# Intuition
+the problem wasnt too hard to understand, the only difficult part is having an optimized way of findfing the GCD
+and working correctly with the Linked ListNode
+
+
+# Approach
+we create a function to get the GCD using euclids algorithm, then traverse the linked list updating the 
+references to add the GCD between the 2 original nodes
+
+# Complexity
+- Time complexity:
+O(n) as we move through n pairs of nodes and the euclids algorith is O(Log v)
+so the algorith is O(n * Log V)
+
+- Space complexity:
+auxiliary space is O(1) and the list nodes is O(n)
+
+# Code
+```python3 []
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    
+    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        def getGCD(a:int, b:int)->int:
+            while b:
+                a, b = b, a % b
+            return a
+
+        curr = head
+        nextNode = curr.next
+
+        while curr.next != None:
+            GCD = getGCD(curr.val, nextNode.val)
+            newNode = ListNode(val=GCD)
+
+            curr.next = newNode
+            newNode.next = nextNode
+            curr = nextNode
+            nextNode = curr.next
+
+        return head
+
+        
+
+        
+```
