@@ -1,0 +1,49 @@
+# Intuition
+My first intution was to create a new list and fill it out while traversing both lists and updating the result as we go on
+
+# Approach
+We first create a new ListNode and a pointer to it called head, this node is updated via an algorith that
+make sure both pointers to the list 1 and 2 are not NoneType, we check the values and append the node with the lowest value
+move the pointer forward for next iteration
+
+if we ever get to the end of a list we append the rest of the list to the answer, we finally return the
+next node from the dummy head
+
+# Complexity
+- Time complexity:
+O(n+m) as we might end up traversing the lenght of the sum of both lists
+
+- Space complexity:
+we are reusing the nodes, not creating any new space so O(1)
+
+# Code
+```python3 []
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        head = dummy
+
+        while list1 and list2:
+            if list1.val < list2.val:
+                dummy.next = list1
+                list1 = list1.next
+                dummy = dummy.next
+            else:
+                dummy.next = list2
+                list2 = list2.next
+                dummy = dummy.next
+
+        if not list1:
+            dummy.next = list2
+            
+        if not list2:
+            dummy.next = list1
+
+        return head.next
+
+```
