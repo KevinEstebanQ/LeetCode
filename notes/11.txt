@@ -1,0 +1,34 @@
+# Intuition
+obviously the first intuition was to brute force the solutions and check for all possible cases, updating a maxWater variable when a new max
+has been reached
+
+# Approach
+for an O(n) solution we have to check evey index only once max, so we use 2 pointer technique on a single while loop
+updating the pointers depending on if it is the smaller between height both heights, we move the pointer that points to the
+smalles height to try and find a greater height that can compensate the loss of width by moving the pointers closer
+
+# Complexity
+- Time complexity:
+O(n) as we can get to check all height is a worst case
+
+- Space complexity:
+we are not creating any new space so O(1)
+
+# Code
+```python3 []
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        self.max = 0
+        left = 0
+        right = len(height)-1
+        while left < right:
+            MW=(right-left)*(min(height[right], height[left]))
+            self.max = max(self.max, MW)
+
+            if height[left] < height[right]:
+                left+=1
+            else: 
+                right-=1
+        
+        return self.max
+```
