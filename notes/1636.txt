@@ -1,0 +1,28 @@
+# Intuition
+my first intuition was to take the total frequency and sort by that but it wouldnt take into account the amount of times the number appears
+second approach came by finding the idea alsewhere that i can use the frequency to append the number frequency times
+
+# Approach
+create a counter obj and sort it by frequency first then by its number negated to account for decreasing order if frequencies are the same
+the use the tupple created by sorting and use its indicies by element to append number Frequency times in the order described above
+
+# Complexity
+- Time complexity:
+O(NlogN) as we sort
+
+- Space complexity:
+O(n) as we have to save n elementes, not inplace
+
+# Code
+```python3 []
+class Solution:
+    def frequencySort(self, nums: List[int]) -> List[int]:
+        count = sorted(Counter(nums).items(), key=lambda x: (x[1], -x[0]))
+        ans = []
+
+        for tup in count:
+            for i in range(tup[1]):
+                ans.append(tup[0])
+        return ans
+
+```
