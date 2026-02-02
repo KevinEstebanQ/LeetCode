@@ -1,0 +1,43 @@
+# Intuition
+at first I was confused by the wording but understood that somehow a map had to be used to keep track of the nodes
+being created
+
+# Approach
+create a map that saves the clones as values for the keys(original references)
+then do a dfs appending the neighbors which calls the dfs for every element in the list of conections
+# Complexity
+- Time complexity:
+O(n) as we go through the graph once
+
+- Space complexity:
+O(n) as we create a new graph and save values in a map
+
+# Code
+```python3 []
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        oldToNew = {}
+
+        def dfs(node1):
+            if node1 in oldToNew:
+                return oldToNew[node1]
+            if not node1:
+                return
+            copy = Node(node1.val)
+            oldToNew[node1] = copy
+            for n in node1.neighbors:
+                copy.neighbors.append(dfs(n))
+
+            return copy
+
+        return dfs(node)
+```

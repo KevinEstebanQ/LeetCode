@@ -1,0 +1,43 @@
+# Intuition
+i hadnt thought about using a stack for keeping track of the parenthesis but it does sound obvious once i
+began looking for clues at first i was going to use string scanning with no keeping track which is not efficient
+
+# Approach
+create a stack and if the current char is an opening bracket the push onto the stack, if its a closing
+then check the output of the pop, if its not a closing and matching parentheses then we return false
+
+# Complexity
+- Time complexity:
+O(n) as we look through the whole length of the string in the worst case
+
+- Space complexity:
+we might get all characters as opening so worst case O(n) saved chars in the stach
+
+# Code
+```python3 []
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        if len(s) <=1:
+            return False
+
+        for b in s: 
+            if b in "({[":
+                stack.append(b)
+            else:
+                if len(stack) == 0:
+                    return False
+
+                opp = stack.pop()
+                match opp:
+                    case '(':
+                        if b != ')':
+                            return False
+                    case '[':
+                        if b != ']':
+                            return False
+                    case '{':
+                        if b != '}':
+                            return False
+        return not stack
+```
