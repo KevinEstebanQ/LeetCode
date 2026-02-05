@@ -1,0 +1,38 @@
+# Intuition
+reversing a linked list is very straight forward, we just need to kep track of prev curr and next, but i wanted to come up with a recursive Solution
+as i had never seen a recursive way of doing it even tho i know it is usual but it was a personal goal
+
+# Approach
+recursively find the new head after attaching old head to prev and, keeping track of prev and next, base case is
+if head is null we return the previous pointer which would be pointing to the reversed head or straigh up null in an empty list
+
+# Complexity
+- Time complexity:
+O(n) as we go through all of the list Nodes
+
+- Space complexity:
+O(h) h being the space of the recursio stack
+
+# Code
+```python3 []
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        e
+        def reverse(p, h):
+            if not h:
+                return p
+            n = h.next
+            h.next = p
+            p = h
+            h = reverse(p,n)
+            return h
+
+        new_head  = reverse(None, head)
+        return new_head
+
+```
