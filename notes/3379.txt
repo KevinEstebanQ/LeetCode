@@ -1,0 +1,58 @@
+# Intuition
+The problem is straight forward, we need to find a way to calculate the new index we need to append taking into account a possible looping because of moves that would put us out of bounds.
+
+# Approach
+as we need to stay inside the constraint of the length of the array we simple need to make use of the Modulo operator, the formula given by the editorial is great for implementation in many languages but in the case of Python we do not need to worry about getting a negative number whe doing modulo operation.
+
+so for every index in the list our new index is simply our current position when looping + the amount of moves nums[i] is asking us to move, we then module that with our len(nums) and we get our correct new index, as modulo in this case creates a number contained in our array length.
+
+example
+```
+array = [3,-2,1,1]
+            i
+
+    i = 1 (our position)
+    nums[i] = -2 (how many spots we want to move)
+    n = len(nums) = 4 (length of array)
+
+    new_index = (i+nums[i])%n = (1+(-2))%4 = -1%4 = 3
+    nums[new_index] = nums[3] = 1 #our correct new position!
+
+```
+for the editorial's solution this is basically what it means
+```python3
+(((i + nums[i]) % n ) + n) % n
+```
+this is useful in for example Java, as an operation like -10 % 3 is -1, so we have to compensate. hence the +n ) %n in the end
+this would do the following to our operation if it was Java
+
+```Java
+i=1, nums[i] = -2
+n = nums.length = 4
+i+nums[i] = -1
+i+nums[i] % n = -1%4 = -1
+//we then should represent i+nums[i] as an offset, not an index
+(-1) + 4 = 3, then 3%4 = 3 <----ANSWER!
+
+(((1 - 2 ) % 4 ) + 4) % 4 = 3
+```
+
+# Complexity
+- Time complexity:
+O(n) as we need to check every element in the list to map to the new one, no unecessary check or looping beyond that is done
+
+- Space complexity:
+O(n) as we are creating a new ans array, we cannot swap in place as that would generate a loss of data so O(n) is the answer
+
+# Code
+```python3 []
+class Solution:
+    def constructTransformedArray(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        ans = [0] * n
+        for i in range(n):
+            index = (i + nums[i])%n
+            ans[i] = nums[index]
+        return ans
+            
+```
